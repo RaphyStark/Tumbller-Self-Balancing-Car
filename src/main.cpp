@@ -344,6 +344,8 @@ void loop()
   functionMode();
   checkObstacle();
   rgb.blink(100);
+
+
   static unsigned long print_time;
   if (millis() - print_time > 100)
   {
