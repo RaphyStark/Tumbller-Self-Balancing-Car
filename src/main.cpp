@@ -11,6 +11,8 @@
 unsigned long start_prev_time = 0;
 boolean carInitialize_en = true;
 
+
+
 void functionMode()
 {
   switch (function_mode)
@@ -318,9 +320,10 @@ void keyEventHandle()
   }
 }
 
+
+
 void setup()
 {
-
   Serial.begin(9600);
   ultrasonicInit();
   keyInit();
@@ -334,24 +337,34 @@ void setup()
 
 void loop()
 {
-  Serial.println("Hello World!");
+  //
   getKeyValue();
   getBluetoothData();
   keyEventHandle();
+
+  // read ultrasonic sensor
+  // call measureDistance() and modify distance_value variable (meters)
   getDistance();
+  
   voltageMeasure();
+  
   setMotionState();
+  
   functionMode();
+  
   checkObstacle();
+  
   rgb.blink(100);
 
-
+  //
   static unsigned long print_time;
   if (millis() - print_time > 100)
   {
     print_time = millis();
-    Serial.println(kalmanfilter.angle);
+    Serial.println(kalmanfilter.angle); // roll angle
   }
+
+  //
   static unsigned long start_time;
   if (millis() - start_time < 10)
   {
@@ -359,6 +372,7 @@ void loop()
     motion_mode = STOP;
     carStop();
   }
+  
   if (millis() - start_time == 2000) // Enter the pendulum, the car balances...
   {
     key_value = '5';

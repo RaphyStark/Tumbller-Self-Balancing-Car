@@ -5,6 +5,8 @@
  * @LastEditTime: 2019-10-10 14:24:57
  * @LastEditors: Please set LastEditors
  */
+
+
 bool left_flag[10] = {false};
 unsigned char left_count_flag = 0;
 unsigned char left_index = 0;
@@ -50,6 +52,7 @@ void rightFilter(bool value)
   if (right_index >= 10)
     right_index = 0;
 }
+
 void leftFilter(bool value)
 {
   if (left_flag[left_index])
@@ -61,11 +64,9 @@ void leftFilter(bool value)
   if (left_index >= 10)
     left_index = 0;
 }
-/**
- * @brief 发送40个38KHz的脉冲
- * 
- * @param pin 产生脉冲的引脚
- */
+
+// Envoyer 40 impulsions de 38KHz
+// La broche qui génère l'impulsion
 void send38K(int pin)
 {
   for (int i = 0; i < 39; i++)
@@ -77,10 +78,7 @@ void send38K(int pin)
   }
 }
 
-/**
- * @brief // 接收引脚中断服务函数  (français : "fonction d'interruption de broche de réception")
- * 
- */
+// fonction d'interruption de broche de réception
 void leftReceive()
 {
   if (left_receive_flag == 0)
@@ -97,6 +95,7 @@ void leftReceive()
     attachPinChangeInterrupt(LEFT_RECEIVE_PIN, leftReceive, FALLING);
   }
 }
+
 void rightReceive()
 {
   if (right_receive_flag == 0)
@@ -205,7 +204,7 @@ void obstacleAvoidanceMode()
 
   if (left_is_obstacle && right_is_obstacle)
   {
-    if (distance_value >= distance_min && distance_max <= distance_max)
+    if (distance_value >= distance_min && distance_max <= distance_max) // distance_value <= distance_max ?
     {
       if (turn_count >= 0)
       {
@@ -226,6 +225,10 @@ void obstacleAvoidanceMode()
       rgb.flashYellowColorback();
     }
   }
+
+
+
+
   else if (left_is_obstacle && !right_is_obstacle)
   {
     motion_mode = TURNRIGHT;
